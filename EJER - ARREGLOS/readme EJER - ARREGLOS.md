@@ -8,7 +8,7 @@ Ademas de elaborar lo anterior mencionado, se nos indico implementar 3 metodos q
    Este primer metodo consiste en que nos deja agregar la cantidad monetaria que se obtuvo de ventas en un departamento y en que mes.
 
 2) Metodo que permita, buscar algun elemento en particular.
-   Este segundo metodo nos permite realizar una busqueda, nos permite realizar una consulta de la cantidad monetaria que so obtuvo en un determinado departamento y en que mes.
+   Este segundo metodo nos permite realizar una busqueda, nos permite realizar una consulta de la cantidad monetaria que se obtuvo en un determinado departamento y en que mes.
    
 3) Metodo que permita, eliminar una venta en particular de algun departamento.
    Este tercer metodo nos permite eliminar una venta especifica de un departamento, este metodo es de gran ayuda, por si se registro una cifra incorrecta o algun otro caso.
