@@ -13,4 +13,4 @@ Ademas de elaborar lo anterior mencionado, se nos indico implementar 3 metodos q
 3) Metodo que permita, eliminar una venta en particular de algun departamento.
    Este tercer metodo nos permite eliminar una venta especifica de un departamento, este metodo es de gran ayuda, por si se registro una cifra incorrecta o algun otro caso.
 
-Cuando ejecute el programa use el primer metodo para registrar ganancias en 3 departamentos, en el mismo mes. Despues use el segundo metodo para buscar una cantidad monetaria especifica (Funciono el metodo sin problemas). Y para el ultimmo metodo elimine una cantidad especifica y listo.
+Cuando ejecute el programa use el primer metodo para registrar ganancias en 3 departamentos, en el mismo mes. Despues use el segundo metodo para buscar una cantidad monetaria especifica (Funciono el metodo sin problemas). Y para el ultimo metodo elimine una cantidad especifica y listo.
