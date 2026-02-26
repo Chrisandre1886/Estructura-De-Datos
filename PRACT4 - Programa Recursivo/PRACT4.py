@@ -27,7 +27,7 @@ def medir_tiempo(funcion, n):
     inicio = time.perf_counter()
     resultado = funcion(n)
     fin = time.perf_counter()
-    tiempo = (fin - inicio) * 1000  # Convertir a milisegundos
+    tiempo = (fin - inicio) * 1000  
     return resultado, tiempo
 
 def mostrar_serie(n, usar_recursivo=True):
@@ -148,6 +148,7 @@ def menu_interactivo():
         else:
             print("Opción no válida. Por favor selecciona 1-5.")
 
-# Ejecutar el programa
+
 if __name__ == "__main__":
+
     menu_interactivo()
