@@ -1,0 +1,20 @@
+Despues de investigar sobre el tema de recursividad y ver un poco mas a detalle como funciona un programa recursivo,
+por ejemplo en este caso se pidio investigar y desarrollar un programa que tenga una solucion iterativa y recursiva (fibonacci) en python.
+
+En el caso de la recursiva simple:
++ Código más elegante y legible
+
++ Sigue directamente la definición matemática
+
+- Extremadamente ineficiente (O(2^n))
+
+- Límite práctico de n ≈ 35
+
+En el caso de iterativo:
+ + Más eficiente en tiempo y memoria
+
+ + Sin riesgo de desbordamiento de pila
+
+ + Escalable a valores muy grandes
+
+ - Código menos intuitivo
