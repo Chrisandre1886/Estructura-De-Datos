@@ -1,0 +1,398 @@
+[
+  {
+    "id": 1,
+    "fecha": "2026-02-25 19:26:56",
+    "usuario": "Sistema",
+    "rol": "Sistema",
+    "tipo": "REGISTRO_USUARIO",
+    "descripcion": "Registro de usuario: Ricardo Jesus Sierra Aleman (Administración)",
+    "datos": {}
+  },
+  {
+    "id": 2,
+    "fecha": "2026-02-25 19:28:48",
+    "usuario": "Sistema",
+    "rol": "Sistema",
+    "tipo": "ALTA_ALUMNO",
+    "descripcion": "Alta de alumno: Christian Andre Chacon Olvera (E2006)",
+    "datos": {}
+  },
+  {
+    "id": 3,
+    "fecha": "2026-02-25 19:28:48",
+    "usuario": "Sistema",
+    "rol": "Sistema",
+    "tipo": "REGISTRO_USUARIO",
+    "descripcion": "Registro de usuario: Christian Andre Chacon Olvera (Estudiante)",
+    "datos": {}
+  },
+  {
+    "id": 4,
+    "fecha": "2026-02-25 19:29:22",
+    "usuario": "E2006",
+    "rol": "Estudiante",
+    "tipo": "EDITAR_ALUMNO",
+    "descripcion": "Edición de alumno: Christian Andre Chacon Olvera (E2006)",
+    "datos": {}
+  },
+  {
+    "id": 5,
+    "fecha": "2026-02-25 19:30:14",
+    "usuario": "E2006",
+    "rol": "Estudiante",
+    "tipo": "EDITAR_ALUMNO",
+    "descripcion": "Edición de alumno: Christian Andre Chacon Olvera (E2006)",
+    "datos": {}
+  },
+  {
+    "id": 6,
+    "fecha": "2026-02-25 19:32:29",
+    "usuario": "A2026",
+    "rol": "Administración",
+    "tipo": "CAMBIO_GRUPO",
+    "descripcion": "Christian Andre Chacon Olvera:  → 3SA",
+    "datos": {}
+  },
+  {
+    "id": 7,
+    "fecha": "2026-02-26 00:08:09",
+    "usuario": "A2026",
+    "rol": "Administración",
+    "tipo": "ALTA_MATERIA",
+    "descripcion": "Alta materia: Fisica General (101)",
+    "datos": {}
+  },
+  {
+    "id": 8,
+    "fecha": "2026-02-26 00:08:19",
+    "usuario": "A2026",
+    "rol": "Administración",
+    "tipo": "CALIFICACION",
+    "descripcion": "Calificación: E2006 - 101: 70.0",
+    "datos": {}
+  },
+  {
+    "id": 9,
+    "fecha": "2026-02-26 00:54:38",
+    "usuario": "A2026",
+    "rol": "Administración",
+    "tipo": "EDITAR_CALIFICACION",
+    "descripcion": "Calificación E2006_101_3_20260226000819: 70.0 → 73.0",
+    "datos": {}
+  },
+  {
+    "id": 10,
+    "fecha": "2026-02-26 01:07:16",
+    "usuario": "A2026",
+    "rol": "Administración",
+    "tipo": "ALTA_ALUMNO",
+    "descripcion": "Alta de alumno: Carlos Jesus Lopez Sierra (E2005)",
+    "datos": {}
+  },
+  {
+    "id": 11,
+    "fecha": "2026-02-26 01:07:16",
+    "usuario": "A2026",
+    "rol": "Administración",
+    "tipo": "REGISTRO_USUARIO",
+    "descripcion": "Registro de usuario: Carlos Jesus Lopez Sierra (Estudiante)",
+    "datos": {}
+  },
+  {
+    "id": 12,
+    "fecha": "2026-02-26 01:07:37",
+    "usuario": "A2026",
+    "rol": "Administración",
+    "tipo": "CAMBIO_GRUPO",
+    "descripcion": "Carlos Jesus Lopez Sierra:  → 3SA",
+    "datos": {}
+  },
+  {
+    "id": 13,
+    "fecha": "2026-02-26 01:08:09",
+    "usuario": "A2026",
+    "rol": "Administración",
+    "tipo": "CALIFICACION",
+    "descripcion": "Calificación: E2005 - 101: 90.0",
+    "datos": {}
+  },
+  {
+    "id": 14,
+    "fecha": "2026-02-26 01:09:37",
+    "usuario": "E2005",
+    "rol": "Estudiante",
+    "tipo": "EDITAR_ALUMNO",
+    "descripcion": "Edición de alumno: Carlos Jesus Lopez Sierra (E2005)",
+    "datos": {}
+  },
+  {
+    "id": 15,
+    "fecha": "2026-02-26 01:17:06",
+    "usuario": "A2026",
+    "rol": "Administración",
+    "tipo": "ALTA_DOCENTE",
+    "descripcion": "Alta docente: Felipe Ramirez Canche Calderon (D1886)",
+    "datos": {}
+  },
+  {
+    "id": 16,
+    "fecha": "2026-02-26 01:17:06",
+    "usuario": "A2026",
+    "rol": "Administración",
+    "tipo": "REGISTRO_USUARIO",
+    "descripcion": "Registro de usuario: Felipe Ramirez Canche Calderon (Docente)",
+    "datos": {}
+  },
+  {
+    "id": 17,
+    "fecha": "2026-02-26 01:34:59",
+    "usuario": "A2026",
+    "rol": "Administración",
+    "tipo": "ALTA_HORARIO",
+    "descripcion": "Alta horario ID: H0001",
+    "datos": {}
+  },
+  {
+    "id": 18,
+    "fecha": "2026-02-26 01:35:58",
+    "usuario": "D1886",
+    "rol": "Docente",
+    "tipo": "EDITAR_CALIFICACION",
+    "descripcion": "Calificación E2005_101_3_20260226010809: 90.0 → 85.0",
+    "datos": {}
+  },
+  {
+    "id": 19,
+    "fecha": "2026-02-26 02:16:13",
+    "usuario": "A2026",
+    "rol": "Administración",
+    "tipo": "EDITAR_MATERIA",
+    "descripcion": "Edición materia: Fisica General (101)",
+    "datos": {}
+  },
+  {
+    "id": 20,
+    "fecha": "2026-02-26 02:42:16",
+    "usuario": "E2006",
+    "rol": "Estudiante",
+    "tipo": "EDITAR_ALUMNO",
+    "descripcion": "Edición de alumno: Christian Andre Chacon Olvera (E2006)",
+    "datos": {}
+  },
+  {
+    "id": 21,
+    "fecha": "2026-02-26 02:46:53",
+    "usuario": "A2026",
+    "rol": "Administración",
+    "tipo": "ELIMINAR_HORARIO",
+    "descripcion": "Eliminación horario ID: H0001",
+    "datos": {}
+  },
+  {
+    "id": 22,
+    "fecha": "2026-02-26 03:09:04",
+    "usuario": "A2026",
+    "rol": "Administración",
+    "tipo": "ALTA_DOCENTE",
+    "descripcion": "Alta docente: Armando Lopez (D1890)",
+    "datos": {}
+  },
+  {
+    "id": 23,
+    "fecha": "2026-02-26 03:09:04",
+    "usuario": "A2026",
+    "rol": "Administración",
+    "tipo": "REGISTRO_USUARIO",
+    "descripcion": "Registro de usuario: Armando Lopez (Docente)",
+    "datos": {}
+  },
+  {
+    "id": 24,
+    "fecha": "2026-02-26 03:11:19",
+    "usuario": "A2026",
+    "rol": "Administración",
+    "tipo": "ALTA_DOCENTE",
+    "descripcion": "Alta docente: Manuel Enrique Ayora Ponce (D1895)",
+    "datos": {}
+  },
+  {
+    "id": 25,
+    "fecha": "2026-02-26 03:11:19",
+    "usuario": "A2026",
+    "rol": "Administración",
+    "tipo": "REGISTRO_USUARIO",
+    "descripcion": "Registro de usuario: Manuel Enrique Ayora Ponce (Docente)",
+    "datos": {}
+  },
+  {
+    "id": 26,
+    "fecha": "2026-02-26 03:14:45",
+    "usuario": "A2026",
+    "rol": "Administración",
+    "tipo": "REGISTRO_USUARIO",
+    "descripcion": "Registro de usuario: Adrian Mauricio Acuña Tejeda (Administración)",
+    "datos": {}
+  },
+  {
+    "id": 27,
+    "fecha": "2026-02-26 03:16:39",
+    "usuario": "A2026",
+    "rol": "Administración",
+    "tipo": "ALTA_ALUMNO",
+    "descripcion": "Alta de alumno: Axel Alfonso Hernandez Velazquez (E3535)",
+    "datos": {}
+  },
+  {
+    "id": 28,
+    "fecha": "2026-02-26 03:16:39",
+    "usuario": "A2026",
+    "rol": "Administración",
+    "tipo": "REGISTRO_USUARIO",
+    "descripcion": "Registro de usuario: Axel Alfonso Hernandez Velazquez (Estudiante)",
+    "datos": {}
+  },
+  {
+    "id": 29,
+    "fecha": "2026-02-26 03:18:41",
+    "usuario": "A2026",
+    "rol": "Administración",
+    "tipo": "ALTA_ALUMNO",
+    "descripcion": "Alta de alumno: Lucia Olvera Ponce (E0606)",
+    "datos": {}
+  },
+  {
+    "id": 30,
+    "fecha": "2026-02-26 03:18:41",
+    "usuario": "A2026",
+    "rol": "Administración",
+    "tipo": "REGISTRO_USUARIO",
+    "descripcion": "Registro de usuario: Lucia Olvera Ponce (Estudiante)",
+    "datos": {}
+  },
+  {
+    "id": 31,
+    "fecha": "2026-02-26 03:20:46",
+    "usuario": "A2026",
+    "rol": "Administración",
+    "tipo": "CAMBIO_GRUPO",
+    "descripcion": "Axel Alfonso Hernandez Velazquez:  → 2SB",
+    "datos": {}
+  },
+  {
+    "id": 32,
+    "fecha": "2026-02-26 03:20:53",
+    "usuario": "A2026",
+    "rol": "Administración",
+    "tipo": "CAMBIO_GRUPO",
+    "descripcion": "Lucia Olvera Ponce:  → 2SB",
+    "datos": {}
+  },
+  {
+    "id": 33,
+    "fecha": "2026-02-26 03:22:49",
+    "usuario": "A2026",
+    "rol": "Administración",
+    "tipo": "ALTA_MATERIA",
+    "descripcion": "Alta materia: Calculo Integral (102)",
+    "datos": {}
+  },
+  {
+    "id": 34,
+    "fecha": "2026-02-26 03:23:57",
+    "usuario": "A2026",
+    "rol": "Administración",
+    "tipo": "ALTA_HORARIO",
+    "descripcion": "Alta horario ID: H0002",
+    "datos": {}
+  },
+  {
+    "id": 35,
+    "fecha": "2026-02-26 03:24:53",
+    "usuario": "A2026",
+    "rol": "Administración",
+    "tipo": "ALTA_HORARIO",
+    "descripcion": "Alta horario ID: H0003",
+    "datos": {}
+  },
+  {
+    "id": 36,
+    "fecha": "2026-02-26 03:25:49",
+    "usuario": "A2026",
+    "rol": "Administración",
+    "tipo": "ALTA_MATERIA",
+    "descripcion": "Alta materia: Contabilidad Financiera (103)",
+    "datos": {}
+  },
+  {
+    "id": 37,
+    "fecha": "2026-02-26 03:26:41",
+    "usuario": "A2026",
+    "rol": "Administración",
+    "tipo": "ALTA_HORARIO",
+    "descripcion": "Alta horario ID: H0004",
+    "datos": {}
+  },
+  {
+    "id": 38,
+    "fecha": "2026-02-26 03:29:51",
+    "usuario": "A2026",
+    "rol": "Administración",
+    "tipo": "ALTA_HORARIO",
+    "descripcion": "Alta horario ID: H0005",
+    "datos": {}
+  },
+  {
+    "id": 39,
+    "fecha": "2026-02-26 03:31:04",
+    "usuario": "A2026",
+    "rol": "Administración",
+    "tipo": "ALTA_MATERIA",
+    "descripcion": "Alta materia: Programacion (POO) (105)",
+    "datos": {}
+  },
+  {
+    "id": 40,
+    "fecha": "2026-02-26 03:31:31",
+    "usuario": "A2026",
+    "rol": "Administración",
+    "tipo": "ALTA_HORARIO",
+    "descripcion": "Alta horario ID: H0006",
+    "datos": {}
+  },
+  {
+    "id": 41,
+    "fecha": "2026-02-26 03:32:00",
+    "usuario": "A2026",
+    "rol": "Administración",
+    "tipo": "ALTA_HORARIO",
+    "descripcion": "Alta horario ID: H0007",
+    "datos": {}
+  },
+  {
+    "id": 42,
+    "fecha": "2026-02-26 03:36:20",
+    "usuario": "A2026",
+    "rol": "Administración",
+    "tipo": "ALTA_MATERIA",
+    "descripcion": "Alta materia: Estructura de datos (107)",
+    "datos": {}
+  },
+  {
+    "id": 43,
+    "fecha": "2026-02-26 03:36:55",
+    "usuario": "A2026",
+    "rol": "Administración",
+    "tipo": "ALTA_HORARIO",
+    "descripcion": "Alta horario ID: H0008",
+    "datos": {}
+  },
+  {
+    "id": 44,
+    "fecha": "2026-02-26 03:44:32",
+    "usuario": "D1890",
+    "rol": "Docente",
+    "tipo": "CALIFICACION",
+    "descripcion": "Calificación: E3535 - 105: 80.0",
+    "datos": {}
+  }
+]
