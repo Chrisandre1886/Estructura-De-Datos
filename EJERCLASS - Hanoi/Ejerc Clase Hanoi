@@ -1,0 +1,416 @@
+import tkinter as tk
+from tkinter import messagebox
+import time
+import threading
+
+LIMITE_VISUAL = 10     
+LIMITE_EJECUCION = 30  
+VELOCIDAD_ANIM = 400   
+
+COLORES = ['#FF6B6B','#FF9F43','#FECA57','#48DBFB','#1DD1A1','#A29BFE','#FD79A8','#E17055','#00CEC9']
+
+class TorreHanoi:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("Torre de Hanói")
+        self.root.state('zoomed')
+        self.root.configure(bg='#0F0F1A')
+
+        self.num_discos = 3
+        self.torres = [[], [], []]
+        self.movimientos = []
+        self.mov_actual = 0
+        self.animando = False
+        self.torre_sel = None
+        self.cancelar_anim = False
+
+        self.root.bind('<Configure>', self._on_resize)
+        self._construir_ui()
+        self.inicializar()
+
+    def _construir_ui(self):
+       
+        bar = tk.Frame(self.root, bg='#1A1A2E', height=70)
+        bar.pack(fill='x')
+        bar.pack_propagate(False)
+
+        tk.Label(bar, text="🗼 TORRE DE HANÓI", font=('Courier', 22, 'bold'),
+                 bg='#1A1A2E', fg='#E94560').pack(side='left', padx=20, pady=15)
+
+        ctrl = tk.Frame(bar, bg='#1A1A2E')
+        ctrl.pack(side='right', padx=20)
+
+        tk.Label(ctrl, text="Discos:", bg='#1A1A2E', fg='#A0A0C0',
+                 font=('Courier', 13)).pack(side='left')
+        self.disco_var = tk.StringVar(value='3')
+        sp = tk.Spinbox(ctrl, from_=1, to=64, width=4, textvariable=self.disco_var,
+                        font=('Courier', 13), bg='#16213E', fg='white',
+                        buttonbackground='#E94560', insertbackground='white',
+                        command=self._cambiar_discos)
+        sp.pack(side='left', padx=(4, 16))
+
+        for txt, cmd, color, attr in [
+            ("Reiniciar",  self.reiniciar,    '#3A86FF', None),
+            ("▶ Resolver", self.resolver,     '#06D6A0', 'btn_resolver'),
+            ("⏹ Cancelar", self.cancelar,     '#C0392B', 'btn_cancelar'),
+            ("Paso →",     self.paso_a_paso,  '#FFB703', None),
+            ("⏱ Medir",   self.medir_tiempos,'#E94560', None),
+        ]:
+            b = tk.Button(ctrl, text=txt, command=cmd, bg=color, fg='white',
+                          font=('Courier', 12, 'bold'), relief='flat',
+                          padx=14, pady=6, cursor='hand2')
+            b.pack(side='left', padx=4)
+            if attr:
+                setattr(self, attr, b)
+        self.btn_cancelar.config(state='disabled')
+
+        self.canvas = tk.Canvas(self.root, bg='#0F0F1A', highlightthickness=0)
+        self.canvas.pack(fill='both', expand=True)
+        self.canvas.bind('<Button-1>', self._click)
+
+        self.estado = tk.StringVar(value="Selecciona discos y presiona Resolver o Paso →")
+        bar_bot = tk.Frame(self.root, bg='#1A1A2E', height=40)
+        bar_bot.pack(fill='x', side='bottom')
+        bar_bot.pack_propagate(False)
+        tk.Label(bar_bot, textvariable=self.estado, bg='#1A1A2E', fg='#A0A0C0',
+                 font=('Courier', 11)).pack(side='left', padx=20)
+
+    def _on_resize(self, event=None):
+        self.root.after(50, self.dibujar)
+
+    def _w(self): return self.canvas.winfo_width() or 900
+    def _h(self): return self.canvas.winfo_height() or 500
+
+    def inicializar(self):
+        self.torres = [list(range(self.num_discos, 0, -1)), [], []]
+        self.movimientos = []
+        self.mov_actual = 0
+        self.torre_sel = None
+        self.dibujar()
+
+    def _generar(self, n, src, dst, aux):
+        if n == 0: return
+        self._generar(n-1, src, aux, dst)
+        self.movimientos.append((src, dst))
+        self._generar(n-1, aux, dst, src)
+
+    def _hanoi_contar(self, n, src, dst, aux, cont, cancelar_flag=None):
+        if n == 0: return
+        if cancelar_flag and cancelar_flag[0]: return
+        self._hanoi_contar(n-1, src, aux, dst, cont, cancelar_flag)
+        cont[0] += 1
+        self._hanoi_contar(n-1, aux, dst, src, cont, cancelar_flag)
+
+    def dibujar(self):
+        if self.num_discos > LIMITE_VISUAL:
+            self._dibujar_modo_texto()
+            return
+        self.canvas.delete('all')
+        W, H = self._w(), self._h()
+        base_y = H - 60
+        poste_h = min(H - 150, 380)
+        postes_x = [W // 4, W // 2, 3 * W // 4]
+        max_disco_w = min(W // 4 - 20, 180)
+
+        self.canvas.create_rectangle(W//8, base_y, 7*W//8, base_y+14,
+                                     fill='#E94560', outline='')
+        nombres = ['A', 'B', 'C']
+        for i, x in enumerate(postes_x):
+            self.canvas.create_rectangle(x-8, base_y-poste_h, x+8, base_y,
+                                         fill='#3A3A5C', outline='')
+            self.canvas.create_text(x, base_y+28, text=f"Torre {nombres[i]}",
+                                    fill='#6060A0', font=('Courier', 12, 'bold'))
+            if self.torre_sel == i:
+                self.canvas.create_rectangle(x-30, base_y-poste_h-10, x+30, base_y,
+                                             outline='#FFB703', width=2, dash=(4,3))
+            for j, disco in enumerate(self.torres[i]):
+                ancho = int(20 + (disco / self.num_discos) * max_disco_w)
+                y = base_y - j*22 - 11
+                color = COLORES[(disco-1) % len(COLORES)]
+                self.canvas.create_rectangle(x-ancho, y-9, x+ancho, y+9,
+                                             fill=color, outline='#0F0F1A', width=2)
+                if ancho > 18:
+                    self.canvas.create_text(x, y, text=str(disco),
+                                            fill='white', font=('Courier', 9, 'bold'))
+
+    def _dibujar_modo_texto(self):
+        self.canvas.delete('all')
+        W, H = self._w(), self._h()
+        n = self.num_discos
+        movs = 2**n - 1
+        self.canvas.create_text(W//2, H//2 - 60,
+            text=f"🗼 Modo cálculo interno",
+            fill='#E94560', font=('Courier', 20, 'bold'))
+        self.canvas.create_text(W//2, H//2,
+            text=f"Discos: {n}   |   Movimientos requeridos: {movs:,}",
+            fill='#A0A0C0', font=('Courier', 14))
+        self.canvas.create_text(W//2, H//2 + 40,
+            text=f"(Con más de {LIMITE_VISUAL} discos la visualización se desactiva para mayor velocidad)",
+            fill='#6060A0', font=('Courier', 11))
+
+    def reiniciar(self):
+        if not self.animando:
+            self.inicializar()
+            self.estado.set("Reiniciado.")
+
+    def _cambiar_discos(self):
+        try:
+            n = int(self.disco_var.get())
+            if 1 <= n <= 64:
+                self.num_discos = n
+                self.inicializar()
+        except: pass
+
+    def cancelar(self):
+        if self.animando:
+            self.cancelar_anim = True
+            self.estado.set("⏹ Cancelado. Presiona Reiniciar para empezar de nuevo.")
+            self.btn_cancelar.config(state='disabled')
+            self.btn_resolver.config(state='normal')
+
+    def resolver(self):
+        if self.animando: return
+        n = self.num_discos
+        if n > LIMITE_EJECUCION:
+            movs = 2**n - 1
+            messagebox.showwarning("⚠️ Advertencia",
+                f"Con {n} discos se necesitan {movs:,} movimientos.\n"
+                f"Esto tardaría miles de años en ejecutarse.\n\n"
+                f"Usa '⏱ Medir' para obtener el tiempo estimado.")
+            return
+        self.inicializar()
+        self._generar(n, 0, 2, 1)
+        self.mov_actual = 0
+        self.animando = True
+        self.cancelar_anim = False
+        self.btn_cancelar.config(state='normal')
+        self.btn_resolver.config(state='disabled')
+        self.estado.set(f"Resolviendo {n} discos ({len(self.movimientos):,} movimientos)...")
+        self._animar()
+
+    def _animar(self):
+        if self.cancelar_anim:
+            self.animando = False
+            return
+        if self.mov_actual < len(self.movimientos):
+            src, dst = self.movimientos[self.mov_actual]
+            self.torres[dst].append(self.torres[src].pop())
+            self.dibujar()
+            self.mov_actual += 1
+            total = len(self.movimientos)
+            self.estado.set(f"Movimiento {self.mov_actual} / {total}")
+            self.root.after(VELOCIDAD_ANIM, self._animar)
+        else:
+            self.animando = False
+            self.btn_cancelar.config(state='disabled')
+            self.btn_resolver.config(state='normal')
+            self.estado.set(f"✅ ¡Resuelto en {self.mov_actual} movimientos!")
+
+    def paso_a_paso(self):
+        if self.animando: return
+        n = self.num_discos
+        if n > LIMITE_EJECUCION:
+            messagebox.showwarning("⚠️ Advertencia",
+                f"Con {n} discos paso a paso no es practicable.\nUsa '⏱ Medir'.")
+            return
+        if not self.movimientos:
+            self._generar(n, 0, 2, 1)
+            self.mov_actual = 0
+        if self.mov_actual < len(self.movimientos):
+            src, dst = self.movimientos[self.mov_actual]
+            self.torres[dst].append(self.torres[src].pop())
+            self.dibujar()
+            self.mov_actual += 1
+            self.estado.set(f"Paso {self.mov_actual} / {len(self.movimientos)}")
+        else:
+            self.estado.set("✅ ¡Torre resuelta! Reinicia para volver a jugar.")
+
+    def _click(self, event):
+        if self.animando or self.num_discos > LIMITE_VISUAL: return
+        W = self._w()
+        xs = [W//4, W//2, 3*W//4]
+        for i, x in enumerate(xs):
+            if abs(event.x - x) < W//8:
+                self._seleccionar_torre(i)
+                return
+
+    def _seleccionar_torre(self, t):
+        if self.torre_sel is None:
+            if self.torres[t]:
+                self.torre_sel = t
+                self.dibujar()
+        else:
+            s = self.torre_sel
+            self.torre_sel = None
+            if s != t and self.torres[s]:
+                top = self.torres[s][-1]
+                if not self.torres[t] or self.torres[t][-1] > top:
+                    self.torres[t].append(self.torres[s].pop())
+            self.dibujar()
+
+    def medir_tiempos(self):
+        win = tk.Toplevel(self.root)
+        win.title("⏱ Medición de Tiempos")
+        win.geometry("720x560")
+        win.configure(bg='#0F0F1A')
+        win.grab_set()
+
+        tk.Label(win, text="⏱ MEDIR TIEMPOS", font=('Courier', 18, 'bold'),
+                 bg='#0F0F1A', fg='#E94560').pack(pady=12)
+
+        row = tk.Frame(win, bg='#0F0F1A')
+        row.pack()
+        tk.Label(row, text="Casos (separados por coma):", bg='#0F0F1A', fg='#A0A0C0',
+                 font=('Courier', 11)).pack(side='left', padx=8)
+        entrada = tk.Entry(row, font=('Courier', 12), bg='#1A1A2E', fg='white',
+                           insertbackground='white', width=24)
+        entrada.insert(0, "5, 10, 30, 64")
+        entrada.pack(side='left')
+
+        # barra de progreso visual
+        prog_frame = tk.Frame(win, bg='#0F0F1A')
+        prog_frame.pack(fill='x', padx=16, pady=(8, 0))
+        prog_lbl = tk.Label(prog_frame, text="", bg='#0F0F1A', fg='#A0A0C0',
+                            font=('Courier', 10))
+        prog_lbl.pack(anchor='w')
+        canvas_prog = tk.Canvas(prog_frame, bg='#1A1A2E', height=18,
+                                highlightthickness=0)
+        canvas_prog.pack(fill='x')
+
+        # cronómetro en tiempo real
+        timer_lbl = tk.Label(win, text="", bg='#0F0F1A', fg='#FFB703',
+                             font=('Courier', 12, 'bold'))
+        timer_lbl.pack()
+
+        out = tk.Text(win, bg='#1A1A2E', fg='#E0E0E0', font=('Courier', 11),
+                      relief='flat', padx=14, pady=10, state='disabled')
+        out.pack(fill='both', expand=True, padx=16, pady=6)
+
+        btn_frame = tk.Frame(win, bg='#0F0F1A')
+        btn_frame.pack(pady=6)
+
+        cancelar_flag = [False]
+        hilo_activo = [None]
+
+        def draw_barra(fraccion, color='#06D6A0'):
+            canvas_prog.update_idletasks()
+            w = canvas_prog.winfo_width()
+            canvas_prog.delete('all')
+            canvas_prog.create_rectangle(0, 0, w, 18, fill='#2A2A4A', outline='')
+            canvas_prog.create_rectangle(0, 0, int(w * fraccion), 18,
+                                         fill=color, outline='')
+
+        def escribir(txt, color=None):
+            out.config(state='normal')
+            if color:
+                tag = f'c{color[1:]}'
+                out.tag_config(tag, foreground=color)
+                out.insert('end', txt, tag)
+            else:
+                out.insert('end', txt)
+            out.see('end')
+            out.config(state='disabled')
+            win.update()
+
+        # actualización del cronómetro cada 100ms
+        tick_id = [None]
+        t_inicio_caso = [0]
+
+        def tick():
+            if not cancelar_flag[0] and hilo_activo[0] and hilo_activo[0].is_alive():
+                elapsed = time.perf_counter() - t_inicio_caso[0]
+                timer_lbl.config(text=f"⏱ {elapsed:.3f} s")
+                tick_id[0] = win.after(100, tick)
+
+        def ejecutar():
+            out.config(state='normal'); out.delete('1.0', 'end'); out.config(state='disabled')
+            try:
+                casos = [int(x.strip()) for x in entrada.get().split(',') if x.strip()]
+            except:
+                messagebox.showerror("Error", "Introduce números separados por coma.", parent=win)
+                return
+            cancelar_flag[0] = False
+            btn_exec.config(state='disabled')
+            btn_stop.config(state='normal')
+
+            def _medir():
+                escribir(f"{'Discos':>7} | {'Movimientos':>22} | {'Tiempo (s)':>12} | Modo\n")
+                escribir("─" * 66 + "\n")
+                total_casos = len(casos)
+                for idx, n in enumerate(casos):
+                    if cancelar_flag[0]:
+                        escribir("\n⏹ Medición cancelada.\n", '#E94560')
+                        break
+                    movs = 2**n - 1
+                    frac_base = idx / total_casos
+                    win.after(0, lambda f=frac_base, lbl=f"Caso {idx+1}/{total_casos}: {n} discos":
+                              (prog_lbl.config(text=lbl), draw_barra(f, '#FFB703')))
+
+                    if n > 60:
+                        seg_est = movs * 50e-9
+                        anios = seg_est / (365.25 * 24 * 3600)
+                        win.after(0, lambda: timer_lbl.config(text="⏱ calculado"))
+                        escribir(f"{n:>7} | {movs:>22,} | {'calculado':>12} | ~{anios:.2e} años\n", '#A29BFE')
+                    elif n > LIMITE_EJECUCION:
+                        seg_est = movs * 50e-9
+                        win.after(0, lambda: timer_lbl.config(text="⏱ estimado"))
+                        escribir(f"{n:>7} | {movs:>22,} | {'~'+_fmt(seg_est):>12} | ⚠️ estimado\n", '#FFB703')
+                    else:
+                        cont = [0]
+                        t_inicio_caso[0] = time.perf_counter()
+                        win.after(0, tick)
+                        self._hanoi_contar(n, 0, 2, 1, cont, cancelar_flag)
+                        seg = time.perf_counter() - t_inicio_caso[0]
+                        if tick_id[0]:
+                            win.after_cancel(tick_id[0])
+                        if cancelar_flag[0]:
+                            escribir("\n⏹ Medición cancelada.\n", '#E94560')
+                            break
+                        modo = "visual" if n <= LIMITE_VISUAL else "interno"
+                        color = '#48DBFB' if n <= LIMITE_VISUAL else '#1DD1A1'
+                        win.after(0, lambda s=seg: timer_lbl.config(text=f"⏱ {s:.4f} s"))
+                        escribir(f"{n:>7} | {movs:>22,} | {seg:>12.4f} | ✅ {modo}\n", color)
+
+                    win.after(0, lambda f=(idx+1)/total_casos: draw_barra(f))
+
+                if not cancelar_flag[0]:
+                    escribir("\n(⚠️ = estimado a 50ns/mov. Visual ≤ 10 discos. Tiempo en segundos)\n",
+                             '#6060A0')
+                    win.after(0, lambda: (draw_barra(1.0), prog_lbl.config(text="✅ Completado")))
+
+                win.after(0, lambda: (btn_exec.config(state='normal'),
+                                      btn_stop.config(state='disabled')))
+
+            t = threading.Thread(target=_medir, daemon=True)
+            hilo_activo[0] = t
+            t.start()
+
+        def detener():
+            cancelar_flag[0] = True
+            btn_stop.config(state='disabled')
+            prog_lbl.config(text="⏹ Cancelando...")
+            draw_barra(0, '#E94560')
+
+        btn_exec = tk.Button(btn_frame, text="▶ Ejecutar medición", command=ejecutar,
+                             bg='#E94560', fg='white', font=('Courier', 12, 'bold'),
+                             relief='flat', padx=16, pady=6, cursor='hand2')
+        btn_exec.pack(side='left', padx=8)
+        btn_stop = tk.Button(btn_frame, text="⏹ Cancelar", command=detener,
+                             bg='#C0392B', fg='white', font=('Courier', 12, 'bold'),
+                             relief='flat', padx=12, pady=6, cursor='hand2',
+                             state='disabled')
+        btn_stop.pack(side='left', padx=8)
+        tk.Button(btn_frame, text="Cerrar", command=win.destroy,
+                  bg='#3A3A5C', fg='white', font=('Courier', 11),
+                  relief='flat', padx=12, cursor='hand2').pack(side='left', padx=8)
+
+def _fmt(seg):
+    if seg < 1e-3: return f"{seg*1e6:.2f} µs"
+    if seg < 1:    return f"{seg*1e3:.3f} ms"
+    if seg < 60:   return f"{seg:.4f} s"
+    return f"{seg/60:.1f} min"
+
+if __name__ == '__main__':
+    root = tk.Tk()
+    TorreHanoi(root)
+    root.mainloop()
