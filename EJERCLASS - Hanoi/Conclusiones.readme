@@ -1,0 +1,69 @@
+Reporte de Codigo Hanoi
+Nombre: Chacon Olvera Christian Andre       Grupo: 3SA
+
+METODOS QUE MANEJA EL CODIGO:
+1- __init__
+Se encarga de arrancar la app, define variables y llama a construir todo.
+
+2- _construir_ui
+Crea los botones, el canvas y las barras de la ventana.
+
+3- _on_resize
+Se encarga de cambiar el tamaño de la ventana.
+
+4- inicializar
+Se encarga de resetear la torre, regresa todos los discos a la torre A y limpia el estado.
+
+5- _generar
+Se encarga de generar una lista de completa de movimientos de forma recursiva pero sin ejecutarlos todavia.
+
+6- _hanoi_contar
+Esta es una version recursiva sin almacenamiento para poder hacer una medicion rapida; esto para poder soportar el flag de cancelacion para interrumpirse.
+
+7- dibujar
+Dibuja las torres y discos en pantalla; si hay muchos discos muestra texto en lugar de gráficos.
+
+8- _dibujar_modo_texto
+Muestra el mensaje de "modo interno" cuando los discos son demasiados para dibujar.
+
+9- reiniciar
+Simplemente resetea el juego.
+
+10- _cambiar_discos
+Se toma el número del spinbox y reinicia con esa cantidad, llama a inicializar.
+
+11- cancelar
+Activa el flag de cancelación de la animación y restaura el estado de los botones (Cancela la ejecucion).
+
+12- resolver
+De manera automatica genera los movimientos y lanza la animación.
+
+13- _animar
+Ejecuta un movimiento cada 400ms hasta terminar o ser cancelado.
+
+14- paso_a_paso
+Avanza un solo movimiento por clic.
+
+15- _click
+Detecta en qué torre hiciste clic.
+
+16- _seleccionar_torre
+Maneja el movimiento manual validando que sea legal (Verifica que cumpla la condicion "No se puede un disco grande sobre uno pequeño").
+
+17- medir_tiempos
+Se encarga de abrir la ventana de medición con barra de progreso, cronómetro y botón de cancelar.
+
+MEDICION DE TIEMPOS:
+Se nos dejo como tarea hacer la prueba de medicion de distintos casos, ejecutar el programa y medir el tiempo que se tarda en resolver 5, 10, 30 y 64 discos:
+
+El programa realizo cada caso en:
+* 5 discos: 31 movimientos, 0.0016s
+* 10 discos: 1,023 movimientos,  0.0017s
+* 30 discos: 1,073,741,823 movimientos,  340.2592s
+* 64 discos: 18,446,744,073,709,551,615 movimientos,  ~2.92e+04 años  (Esta medicion no se pudo hacer ya que la gran cantidad de discos tardaria muchusimo tiempo en acomodarse).
+
+CONCLUSION:
+Despues de realizar esta actividad me queda claro que la Torre de Hanói es un ejemplo perfecto de crecimiento exponencial. Porque con pocos discos el programa corre al instante, pero cada disco que agregas duplica el tiempo.
+Entonces al pasar de 10 discos a 30 discos es un gran salto ya que el tiempo de medicion brinca de microsegundos a minutos, ahora con 64 es casi imposible y con interfaz menos jajaj.
+De hecho por eso el programa tiene cierta condicion, que cuando sean una cierta cantidad de discos ya no los muestre de manera visual si no internamente, 
+tambien se agrego un boton de cancelar porque la primera vez que lo ejecute, se tardo demasiado y cuando lo intente parar colapso mi laptop. Esta actividad me gusto bastante.
