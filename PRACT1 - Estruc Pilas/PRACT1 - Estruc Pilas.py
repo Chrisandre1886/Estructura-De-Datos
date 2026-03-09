@@ -159,7 +159,6 @@ class PilaVisual:
             return
         
         if valor_buscado in self.pila:
-            # El valor existe en la pila
             if self.pila[-1] == valor_buscado:
                 valor_eliminado = self.pila.pop()
                 messagebox.showinfo("Pop", f"Se eliminó '{valor_eliminado}' del tope de la pila")
@@ -286,4 +285,5 @@ class PilaApp:
 
 if __name__ == "__main__":
     app = PilaApp()
+
     app.run()
