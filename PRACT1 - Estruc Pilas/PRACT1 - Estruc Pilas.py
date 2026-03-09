@@ -183,7 +183,7 @@ class PilaVisual:
                         elementos_temporales.append(elemento)
                         self.dibujar_pila()
                         self.root.update()
-                        self.root.after(500)  # Pausa para visualizar
+                        self.root.after(500)  
                     
                     valor_eliminado = self.pila.pop()
                     self.dibujar_pila()
@@ -192,13 +192,12 @@ class PilaVisual:
                     
                     messagebox.showinfo("Proceso", f"Restaurando {len(elementos_temporales)} elemento(s)")
                     
-                    # Agregar de vuelta los elementos (en orden inverso para mantener la estructura)
                     for elemento in reversed(elementos_temporales):
                         if len(self.pila) < self.capacidad_maxima:
                             self.pila.append(elemento)
                             self.dibujar_pila()
                             self.root.update()
-                            self.root.after(500)  # Pausa para visualizar
+                            self.root.after(500)  
                         else:
                             messagebox.showerror("Error", "No hay espacio para restaurar todos los elementos")
                             break
@@ -287,3 +286,4 @@ if __name__ == "__main__":
     app = PilaApp()
 
     app.run()
+
