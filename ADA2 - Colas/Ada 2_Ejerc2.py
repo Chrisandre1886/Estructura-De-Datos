@@ -36,10 +36,9 @@ class SistemaColasSeguros:
     """Sistema de gestión de colas para una compañía de seguros"""
     
     def __init__(self):
-        # Inicializar colas para diferentes servicios
         self.colas = {}
         self.contadores = {}
-        self.numero_servicios = 5  # Número de servicios disponibles
+        self.numero_servicios = 5  
         
         for i in range(1, self.numero_servicios + 1):
             self.colas[i] = Cola()
@@ -158,4 +157,5 @@ def main():
 
 
 if __name__ == "__main__":
+
     main()
