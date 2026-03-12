@@ -1,29 +1,23 @@
 class Cola:
-    """Implementación de una cola utilizando una lista"""
     
     def __init__(self):
         self.items = []
     
     def encolar(self, item):
-        """Agrega un elemento al final de la cola"""
         self.items.append(item)
     
     def desencolar(self):
-        """Elimina y retorna el primer elemento de la cola"""
         if not self.esta_vacia():
             return self.items.pop(0)
         return None
     
     def esta_vacia(self):
-        """Verifica si la cola está vacía"""
         return len(self.items) == 0
     
     def tamano(self):
-        """Retorna el tamaño de la cola"""
         return len(self.items)
     
     def ver_primero(self):
-        """Retorna el primer elemento sin eliminarlo"""
         if not self.esta_vacia():
             return self.items[0]
         return None
@@ -33,7 +27,6 @@ class Cola:
 
 
 class SistemaColasSeguros:
-    """Sistema de gestión de colas para una compañía de seguros"""
     
     def __init__(self):
         self.colas = {}
@@ -45,15 +38,11 @@ class SistemaColasSeguros:
             self.contadores[i] = 0
     
     def generar_numero_atencion(self, servicio):
-        """Genera un número de atención para el servicio específico"""
         self.contadores[servicio] += 1
         return f"{servicio}-{self.contadores[servicio]:03d}"
     
     def llegada_cliente(self, servicio):
-        """
-        Procesa la llegada de un cliente
-        Formato entrada: C [número_servicio]
-        """
+        
         try:
             servicio = int(servicio)
             if servicio < 1 or servicio > self.numero_servicios:
@@ -72,10 +61,7 @@ class SistemaColasSeguros:
             print("Error: El número de servicio debe ser un valor numérico")
     
     def atender_cliente(self, servicio):
-        """
-        Atiende al siguiente cliente de una cola específica
-        Formato entrada: A [número_servicio]
-        """
+        
         try:
             servicio = int(servicio)
             if servicio < 1 or servicio > self.numero_servicios:
@@ -95,7 +81,6 @@ class SistemaColasSeguros:
             print("Error: El número de servicio debe ser un valor numérico")
     
     def mostrar_estado(self):
-        """Muestra el estado actual de todas las colas"""
         print("\n" + "="*50)
         print("ESTADO ACTUAL DE LAS COLAS")
         print("="*50)
@@ -110,7 +95,6 @@ class SistemaColasSeguros:
 
 
 def main():
-    """Función principal del programa"""
     sistema = SistemaColasSeguros()
     
     print("\n" + "="*50)
@@ -159,3 +143,4 @@ def main():
 if __name__ == "__main__":
 
     main()
+
