@@ -1,1 +1,16 @@
+ADA 3 -- Listas  --  Codigo Gestion de Postres ---
+Chacon Olvera Christian Andre  ---  3SA --- 18/03/2026
 
+--- Conclusion ---
+
+Cuando hay postres repetidos pueden surgir distintas situaciones.
+Cuando ingrese dos postres repetidos con los mismos ingredientes, me marco error pero siendo sincero nose si fue por error de codigo mio o
+de por si tiene que dar error, asi que investigue y encontre una forma de solucionar este problema.
+Cuando se tenga un caso asi (Postres repetidos), ahora el codigo le da al usuario opciones:
+1 - Mantener el postre que el usuario quiera (Al eliminar uno, no hay perdida de datos)
+2- En el caso que los postres tengan ingredientes diferentes al eliminar uno de los postres pues se perderian los ingredientes del otro postre,
+entonces una de las soluciones que vi fue que se pueden fusionar las listas, combinando los ingredientes sin repetir para asi no perder estos datos.
+
+De todas maneras si llega a pasar este caso, el programa manda un mensaje con las tres opciones y asi el usuario puede decidir que hacer.
+
+Todo este tema de las listas por momentos me revuelve un poco, pero siento que al realizar estas tareas me ayuda a entender un poco mas claro su funcionamiento y su estructura.
